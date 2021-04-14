@@ -1,0 +1,102 @@
+:root {
+  /* prevents mobile browsers from sometimes scaling text */
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+
+  margin: 0;
+
+  flex-direction: column;
+
+  font-family: $font-main;
+  font-size: rem(14);
+  line-height: line-height(14, 28);
+  color: map-get($map: $map, $key: text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  background-color: $color-white;
+
+  scroll-behavior: smooth;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+
+  padding: rem(48) rem(8);
+
+  @include breakpoint($tablet) {
+    padding: rem(48) rem(50);
+  }
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  max-width: calc(1275px - 25px); // 1200px
+
+  margin: 0 auto;
+  padding: 0 rem(25);
+
+  flex-direction: column;
+}
+
+.hide {
+  display: none;
+}
+
+section {
+  display: flex;
+
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  transition: color 0.2s linear;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -19,20 +19,24 @@ const App = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', padding: '40px' }}>
-      <img src="/images/logo.png" alt="logo" style={{ margin: 'auto' }} />
-      <CitySearch cities={cities} onSelect={addSelectedCity} />
-      <div style={{ display: 'flex', flexDirection: 'row', margin: 'auto' }}>
-        {selectedCities.map((city, index) => (
-          <CityCard
-            key={index}
-            city={city}
-            currentTime={currentTime}
-            onRemove={removeSelectedCity}
-          />
-        ))}
+    <main className="wrapper">
+      <div className="logo">
+        <img src="/images/timezonehub-logo.png" alt="Timezonehub" />
       </div>
-    </div>
+      <CitySearch cities={cities} onSelect={addSelectedCity} />
+      <section className="cities-group">
+        <div className="cities">
+          {selectedCities.map((city, index) => (
+            <CityCard
+              key={index}
+              city={city}
+              currentTime={currentTime}
+              onRemove={removeSelectedCity}
+            />
+          ))}
+        </div>
+      </section>
+    </main>
   );
 };
 

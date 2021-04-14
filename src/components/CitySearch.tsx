@@ -22,6 +22,7 @@ const CitySearch = ({ cities, onSelect }: CitySearchProps) => {
   }));
 
   const handleSelect = () => {
+
     if (selectedCity && onSelect) {
       onSelect(selectedCity.value);
     }
@@ -30,28 +31,31 @@ const CitySearch = ({ cities, onSelect }: CitySearchProps) => {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        padding: '40px',
-        margin: 'auto',
-      }}
+    <section
+      className="search-group"
     >
-      <div style={{ width: '300px' }}>
-        <Select
-          value={selectedCity}
-          onChange={setSelectedCity}
-          options={cityOptions}
-        />
-      </div>
+      <Select
+        value={selectedCity}
+        onChange={setSelectedCity}
+        options={cityOptions}
+        className='city-search'
+        classNamePrefix='city-search'
+        placeholder='Search for cities, zip codes...'
+        components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }}
+        onMenuOpen={() => {
+          document.querySelector('body').classList.add('city-search-menu-open');
+        }}
+        onMenuClose={() => {
+          document.querySelector('body').classList.remove('city-search-menu-open');
+        }}
+      />
       <button
         style={{ width: '100px', marginLeft: '20px' }}
         onClick={handleSelect}
       >
         Add City
       </button>
-    </div>
+    </section>
   );
 };
 

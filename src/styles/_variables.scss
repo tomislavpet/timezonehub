@@ -1,0 +1,41 @@
+/*
+  Font variables
+*/
+$font-main: 'Fira Sans', sans-serif;
+
+/*
+  Breakpoints
+*/
+$desktop: 1024px;
+$tablet: 768px;
+
+/*
+  Color and color maps
+*/
+
+$color-white: #ffffff;
+$color-error: red;
+$color-warning: orange;
+$color-success: darkseagreen;
+$color-info: cornflowerblue;
+$alert-red: #ffebee !default;
+$alert-blue: #e3f2fd !default;
+$alert-orange: #fff3e0 !default;
+$alert-green: #e8f5e9 !default;
+$alert-amber: #fff8e1 !default;
+
+// User login/password reset colors
+$color-map-admin-user: (
+green: #00ce81,
+label:#555555,
+link: #808080,
+link-hover: #b23b3b
+);
+
+// General color map
+$map: (
+text: #5E708A,
+gray: #D8D8D8,
+gray-1: #DDE2E8,
+light-blue: #90B2E2,
+);

@@ -1,0 +1,163 @@
+@function line-height($psd-font-size, $psd-line-height: $psd-font-size) {
+  @return $psd-line-height/$psd-font-size;
+}
+
+@mixin cf {
+  zoom: 1;
+
+  &:after {
+    display: block;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+    content: ".";
+  }
+}
+
+/**
+ * CSS Grid mixin
+ */
+@mixin display-grid {
+  display: -ms-grid;
+  display: grid;
+}
+
+/**
+ * Convert pixels to rems
+ */
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function rem ($size, $font-size-base: 16) {
+  @return (strip-unit($size) / strip-unit($font-size-base)) + rem;
+}
+
+/**
+ * Breakpoint mixin
+ * For typography-map mixin
+ */
+@mixin breakpoint($mq01: 0, $mq2: false, $maxmin: min-width) {
+  @if $mq2 == false {
+    @media ($maxmin: $mq01) {
+      @content;
+    }
+  }
+
+  @else {
+    @media (min-width: $mq01) and (max-width: $mq2) {
+      @content;
+    }
+  }
+}
+
+/**
+ * Typography map
+ */
+@mixin typography-map($fs-map, $function: rem) {
+  @each $fs-breakpoint, $fs-font-size in $fs-map {
+    @if $fs-breakpoint == null {
+      @include make-font-size($fs-font-size, $function);
+    }
+
+    @else {
+      @include breakpoint($fs-breakpoint) {
+        @include make-font-size($fs-font-size, $function);
+      }
+    }
+  }
+}
+
+// Utility function for mixin font-size
+@mixin make-font-size($fs-font-size, $function) {
+  // If $fs-font-size is a list, include
+  // font-size, line-height, letter-spacing
+  @if type-of($fs-font-size) == "list" {
+    @if $function == rem {
+      font-size: rem(nth($fs-font-size, 1));
+    }
+
+    @else if $function == em {
+      font-size: em(nth($fs-font-size, 1));
+    }
+
+    @else {
+      font-size: nth($fs-font-size, 1);
+    }
+
+    @if (length($fs-font-size) > 1) {
+      line-height: line-height(nth($fs-font-size, 1), nth($fs-font-size, 2));
+    }
+
+    @if (length($fs-font-size) > 2) {
+      letter-spacing: nth($fs-font-size, 3);
+    }
+  }
+
+  @else {
+    @if $function == rem {
+      font-size: rem($fs-font-size);
+    }
+
+    @else if $function == em {
+      font-size: em($fs-font-size);
+    }
+
+    @else {
+      font-size: $fs-font-size;
+    }
+  }
+}
+
+@mixin placeholder {
+  ::-webkit-input-placeholder {@content}
+
+  :-moz-placeholder           {@content}
+
+  ::-moz-placeholder          {@content}
+
+  :-ms-input-placeholder      {@content}
+}
+
+@mixin float-label-container {
+  display: block;
+  position: relative;
+}
+
+@mixin float-label {
+  label, > span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: text;
+    font-size: 14px;
+    opacity: 1;
+    transition: all .2s;
+    color: #fe7719;
+    @content;
+  }
+}
+
+@mixin float-label-input {
+  &::placeholder {
+    opacity: 1;
+    transition: all .2s;
+  }
+
+  &:placeholder-shown:not(:focus)::placeholder {
+    opacity: 0;
+  }
+}
+
+@mixin float-label-scaled {
+  &:placeholder-shown:not(:focus) + * {
+    font-size: 14px;
+    // opacity: .5;
+    color: #c7c8cd;
+    @content;
+  }
+}
