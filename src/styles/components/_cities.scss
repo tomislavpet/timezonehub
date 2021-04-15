@@ -1,0 +1,193 @@
+.cities {
+  &-group {
+    transition: filter 0.1s linear;
+
+    overflow: hidden;
+
+    .city-search-menu-open & {
+      filter: blur(2px);
+      -webkit-filter: blur(2px);
+    }
+  }
+
+  display: flex;
+
+  justify-content: flex-start;
+
+  overflow-x: scroll;
+
+  @include breakpoint($tablet) {
+    justify-content: center;
+
+    overflow-x: hidden;
+  }
+
+  .city {
+    width: rem(144);
+    min-width: rem(144);
+
+
+    position: relative;
+    z-index: 2;
+
+    background-color: #fff;
+
+    @include breakpoint(0, $tablet) {
+      &:first-of-type {
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 3;
+      }
+    }
+
+    @include breakpoint($tablet) {
+      width: rem(216);
+    }
+
+    &:not(:last-of-type) {
+      margin-right: rem(8);
+
+      @include breakpoint($tablet) {
+        margin-right: rem(40);
+      }
+    }
+
+    &__handle {
+      display: flex;
+
+      cursor: pointer;
+    }
+
+    &__name {
+      margin: rem(16) 0 rem(8);
+
+      font-size: rem(18);
+      font-weight: 700;
+      line-height: line-height(18, 32);
+      color: #333;
+
+      @include breakpoint($tablet) {
+        font-size: rem(24);
+        line-height: line-height(24, 32);
+      }
+    }
+
+    &__current-time {
+      margin-bottom: rem(16);
+    }
+
+    &__current {
+      display: flex;
+      width: rem(85);
+
+      justify-content: space-between;
+      align-items: baseline;
+
+      color: #333;
+      font-size: rem(16);
+      line-height: line-height(16, 24);
+
+      @include breakpoint($tablet) {
+        font-size: rem(20);
+        line-height: line-height(20, 24);
+      }
+
+      span {
+        display: inline-block;
+        margin-left: rem(4);
+
+        color: #777;
+        font-size: rem(13);
+        line-height: line-height(13, 16);
+        text-transform: uppercase;
+      }
+    }
+
+    &__controls {
+      display: flex;
+
+      margin-bottom: rem(20);
+    }
+
+    &__pin,
+    &__remove {
+      display: flex;
+      width: rem(48);
+      height: rem(48);
+
+      justify-content: center;
+      align-items: center;
+
+      background-color: #fafafa;
+
+      border-radius: rem(12);
+
+      cursor: pointer;
+
+      transition: background-color 0.2s linear;
+
+      &:hover {
+        background-color: darken(#fafafa, 10%);
+      }
+
+      &.is-active {
+        background-color: #333;
+
+        svg {
+          path {
+            stroke: #fff;
+          }
+        }
+      }
+    }
+
+    &__pin {
+      margin-right: rem(8);
+
+      &.is-active {
+        svg {
+          transform: rotate(-45deg);
+        }
+      }
+    }
+
+    &__time {
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      padding: rem(6) rem(18);
+    }
+
+    &__tod {
+      display: flex;
+
+      align-items: center;
+
+      font-size: rem(13);
+      text-transform: uppercase;
+
+      span {
+        color: #777;
+
+        &:first-of-type {
+          margin: 0 rem(4);
+
+          font-weight: 700;
+          font-size: rem(16);
+          color: #333;
+        }
+      }
+    }
+
+    &__day {
+      font-size: rem(14);
+      line-height: line-height(14, 16);
+      color: #222222;
+
+      opacity: 0.2;
+    }
+  }
+}

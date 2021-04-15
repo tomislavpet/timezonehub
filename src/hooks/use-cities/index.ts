@@ -37,9 +37,9 @@ export const useCities = () => {
   const [selectedCities, setSelectedCities] = useState<City[]>(
     getStoredCities() || [
       getUserCity(),
-      findCity('New York'),
-      findCity('London'),
-      findCity('Tokyo'),
+      // findCity('New York'),
+      // findCity('London'),
+      // findCity('Tokyo'),
     ]
   );
 

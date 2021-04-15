@@ -1,0 +1,50 @@
+.search {
+  &-group {
+    display: flex;
+    margin: rem(32) 0;
+
+    flex-direction: row;
+
+    justify-content: center;
+
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.city-search {
+  display: flex;
+  width: 100%;
+  max-width: rem(560);
+
+  &__control {
+    width: 100%;
+    max-width: rem(560);
+
+    font-size: rem(16);
+
+    border-color: #E2E2E2 !important;
+    border-width: 2px !important;
+    border-radius: rem(12) !important;
+
+    background-color: #FAFAFA !important;
+    background-image: url('/images/icons/icon-search.svg');
+    background-repeat: no-repeat;
+    background-position: left 20px top 50%;
+  }
+
+  &__value-container {
+    padding: rem(12) rem(8) rem(12) rem(60) !important;
+
+    @include breakpoint($tablet) {
+      padding: rem(16) rem(20) rem(16) rem(64) !important;
+    }
+  }
+
+  &__menu {
+    border: none !important;
+
+    box-shadow: 0px 8px 32px rgba(1, 11, 18, 0.06);
+    border-radius: 12px;
+  }
+}

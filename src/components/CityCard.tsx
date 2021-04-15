@@ -3,52 +3,86 @@ import { formatToTimeZone } from 'date-fns-timezone';
 import { City } from 'src/types';
 import { generate24Hours, isDaytime } from 'src/utils/time';
 
+import handle from 'src/images/icons/icon-handle.svg';
+import day from 'src/images/icons/icon-day.svg';
+import night from 'src/images/icons/icon-moon.svg';
+
+import {useState} from 'react';
+
 interface CityCardProps {
   city: City;
   currentTime: Date;
   onRemove: (city: City) => void;
 }
 
+
 const CityCard = ({ city, currentTime, onRemove }: CityCardProps) => {
+  const [isActive, setActive] = useState("false");
+
+  const handleToggle = () => {
+    setActive(!isActive);
+  };
+
   return (
     <div
-      style={{
-        width: '150px',
-        height: '700px',
-        paddingTop: '20px',
-        border: 'solid 1px lightgray',
-      }}
+      className="city"
     >
-      <div style={{ textAlign: 'center', fontWeight: 700 }}>
-        {city.name}
-        <span
-          style={{ marginLeft: '10px', cursor: 'pointer' }}
-          onClick={() => onRemove(city)}
-        >
-          ✖️
-        </span>
+      <div 
+        className="city__handle">
+        <img 
+          src={handle} 
+          alt=""
+        />
       </div>
-      <div style={{ textAlign: 'center', marginTop: '10px', fontWeight: 500, color: 'gray' }}>
-        {formatToTimeZone(currentTime, 'h:mm:ssa ddd', { timeZone: city.timezone })}
+      <div className="city__name">{city.name}</div>
+      <div className="city__current-time">
+        <div className="city__current">
+          {formatToTimeZone(currentTime, 'h:mm:ss', { timeZone: city.timezone })}
+          <span>{formatToTimeZone(currentTime, 'a', { timeZone: city.timezone })}</span>
+        </div>
       </div>
-      <div style={{ height: '20px' }} />
-
-      {generate24Hours(currentTime).map((hour, index) => {
-        const daytime = isDaytime(hour, city);
-        return (
-          <div
-            key={index}
-            style={{
-              textAlign: 'left',
-              paddingLeft: '15px',
-              backgroundColor: daytime ? undefined : '#eee',
-            }}
-          >
-            {daytime ? '☀️' : '🌛'}
-            {formatToTimeZone(hour, 'ha ddd', { timeZone: city.timezone })}
-          </div>
-        );
-      })}
+      <div className="city__controls">
+        <div onClick={handleToggle} className={`city__pin ${isActive ? "is-active" : ""}`}>
+          <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 4.5l-4 4L7 10l-1.5 1.5 7 7L14 17l1.5-4 4-4M9 15l-4.5 4.5M14.5 4L20 9.5" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div className="city__remove" onClick={() => onRemove(city)}>
+        <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6l12 12" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        </div>
+      </div>
+      <div className="city__time-list">
+        {generate24Hours(currentTime).map((hour, index) => {
+          const daytime = isDaytime(hour, city);
+          return (
+            <div
+              className="city__time"
+              key={index}
+              style={{
+                backgroundColor: daytime ? undefined : '#F7FAFD',
+              }}
+            >
+              <div className="city__tod">
+                {daytime ? (<img src={day} alt=""/>) : (<img src={night} alt=""/>)}
+                <span>
+                  {formatToTimeZone(hour, 'h', { timeZone: city.timezone })}
+                </span>
+                <span>
+                {formatToTimeZone(hour, 'a', { timeZone: city.timezone })}
+                </span>
+              </div>
+              
+              <div className="city__day">
+                {formatToTimeZone(hour, 'ddd', { timeZone: city.timezone })}
+              </div>
+              
+            </div>
+          );
+        })}
+      </div>
+      
     </div>
   );
 };
