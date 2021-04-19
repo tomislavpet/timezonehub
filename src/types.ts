@@ -7,4 +7,5 @@ export type City = {
   timezone: string;
   lat: number;
   lng: number;
+  isPinned: boolean;
 };

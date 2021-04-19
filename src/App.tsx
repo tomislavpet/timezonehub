@@ -9,6 +9,7 @@ const App = () => {
     selectedCities,
     addSelectedCity,
     removeSelectedCity,
+    pinSelectedCity,
   } = useCities();
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -28,10 +29,11 @@ const App = () => {
         <div className="cities">
           {selectedCities.map((city, index) => (
             <CityCard
-              key={index}
+              key={`${city.name}-${city.countryShort}`}
               city={city}
               currentTime={currentTime}
               onRemove={removeSelectedCity}
+              onPin={pinSelectedCity}
             />
           ))}
         </div>

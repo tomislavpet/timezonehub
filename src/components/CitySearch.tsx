@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from 'react-windowed-select';
 
 import { City } from 'src/types';
@@ -14,47 +14,40 @@ type CityOption = {
 };
 
 const CitySearch = ({ cities, onSelect }: CitySearchProps) => {
-  const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
-
   const cityOptions: CityOption[] = cities.map((c) => ({
     value: c,
     label: `${c.name}, ${c.countryShort}`,
   }));
 
-  const handleSelect = () => {
-
-    if (selectedCity && onSelect) {
-      onSelect(selectedCity.value);
+  const handleSelect = (selectedValue: CityOption) => {
+    if (selectedValue?.value) {
+      onSelect(selectedValue.value);
     }
-
-    setSelectedCity(null);
   };
 
   return (
-    <section
-      className="search-group"
-    >
+    <section className="search-group">
       <Select
-        value={selectedCity}
-        onChange={setSelectedCity}
+        onChange={handleSelect}
         options={cityOptions}
-        className='city-search'
-        classNamePrefix='city-search'
-        placeholder='Search for cities, zip codes...'
-        components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }}
+        className="city-search"
+        classNamePrefix="city-search"
+        placeholder="Search for a city..."
+        components={{
+          DropdownIndicator: () => null,
+          IndicatorSeparator: () => null,
+        }}
         onMenuOpen={() => {
-          document.querySelector('body').classList.add('city-search-menu-open');
+          document
+            .querySelector('body')
+            ?.classList.add('city-search-menu-open');
         }}
         onMenuClose={() => {
-          document.querySelector('body').classList.remove('city-search-menu-open');
+          document
+            .querySelector('body')
+            ?.classList.remove('city-search-menu-open');
         }}
       />
-      <button
-        style={{ width: '100px', marginLeft: '20px' }}
-        onClick={handleSelect}
-      >
-        Add City
-      </button>
     </section>
   );
 };

@@ -37,9 +37,9 @@ export const useCities = () => {
   const [selectedCities, setSelectedCities] = useState<City[]>(
     getStoredCities() || [
       getUserCity(),
-      // findCity('New York'),
-      // findCity('London'),
-      // findCity('Tokyo'),
+      findCity('New York'),
+      findCity('London'),
+      findCity('Tokyo'),
     ]
   );
 
@@ -53,9 +53,34 @@ export const useCities = () => {
     const newSelectedCities = selectedCities.filter(
       (c) => !(c.name === city.name && c.countryShort === city.countryShort)
     );
+
+    if (
+      newSelectedCities.filter((c) => c.isPinned).length === 0 &&
+      newSelectedCities.length > 0
+    ) {
+      newSelectedCities[0].isPinned = true;
+    }
+
     setSelectedCities(newSelectedCities);
     localStorage?.setItem('selectedCities', JSON.stringify(newSelectedCities));
   };
 
-  return { cities, selectedCities, addSelectedCity, removeSelectedCity };
+  const pinSelectedCity = (city: City) => {
+    const newSelectedCities = selectedCities
+      .map((c) => ({
+        ...c,
+        isPinned: c.name === city.name && c.countryShort === city.countryShort,
+      }))
+      .sort((c1, c2) => (c1.isPinned ? -1 : 1));
+    setSelectedCities(newSelectedCities);
+    localStorage?.setItem('selectedCities', JSON.stringify(newSelectedCities));
+  };
+
+  return {
+    cities,
+    selectedCities,
+    addSelectedCity,
+    removeSelectedCity,
+    pinSelectedCity,
+  };
 };
