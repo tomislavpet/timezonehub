@@ -3,7 +3,6 @@ import { formatToTimeZone } from 'date-fns-timezone';
 import { City } from 'src/types';
 import { generate24Hours, isDaytime } from 'src/utils/time';
 
-import handle from 'src/images/icons/icon-handle.svg';
 import day from 'src/images/icons/icon-day.svg';
 import night from 'src/images/icons/icon-moon.svg';
 
@@ -21,9 +20,9 @@ const CityCard = ({ city, currentTime, onRemove, onPin }: CityCardProps) => {
 
   return (
     <div className="city">
-      <div className="city__handle">
+      {/* <div className="city__handle">
         <img src={handle} alt="" />
-      </div>
+      </div> */}
       <div className="city__name">{city.name}</div>
       <div className="city__current-time">
         <div className="city__current">
